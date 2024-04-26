@@ -1,85 +1,100 @@
-//{ Driver Code Starts
-import java.util.*;
-import java.lang.*;
-import java.io.*;
+ //{ Driver Code Starts
+//Initial Template for Java
 
+/*package whatever //do not write package name here */
+
+import java.io.*;
+import java.util.*;
 class GFG {
 	public static void main (String[] args) {
-
+	    
+	    //taking input using Scanner class
 		Scanner sc=new Scanner(System.in);
-		int test=sc.nextInt();
-		while(test-- > 0){
-		    int p=sc.nextInt();             // Take size of both the strings as input
-		    int q=sc.nextInt();
-		    
-		    String s1=sc.next();            // Take both the string as input
-	        String s2=sc.next();
-		    
-		    Solution obj = new Solution();
-		    
-		    System.out.println(obj.lcs(p, q, s1, s2));
+		
+		//taking total testcases
+		int t=sc.nextInt();
+		
+		sc.nextLine();
+		while(t-->0)
+		{
+		   //taking String X and Y
+		   String S[]=sc.nextLine().split(" ");
+		   String X=S[0];
+		   String Y=S[1];
+		   
+		   //calling function shortestCommonSupersequence()
+		   System.out.println(new Solution().shortestCommonSupersequence(X, Y, X.length(), Y.length()));
 		}
 	}
+
+
+
+
+       
 }
 // } Driver Code Ends
 
 
+//User function Template for Java
+
 class Solution
 {
-    //Function to find the length of longest common subsequence in two strings.
-    static int lcs(int x, int y, String s1, String s2)
+    //Function to find length of shortest common supersequence of two strings.
+    public static int shortestCommonSupersequence(String X,String Y,int m,int n)
     {
-        // your code here
-        
-        int dp[][] = new int[x+1][y+1];
-   
-      return lcs (x , y ,s1 , s2 , dp);
-        
-    }
-    
-    
-    public static int lcs(int x, int y, String s1, String s2 , int [][]dp){
-        
-    
-        
-          for(int m = 0  ; m < x+1 ; m++){
-            
-          for(int n = 0  ; n < y+1 ; n++){
-               
-             
-              
-               
-        if(m == 0 || n == 0){
-            
-              dp[m][n] = 0;
-            
-        }
+        int dp[][] = new int[m+1][n+1];
         
         
+        int longestcommonnsubsequence = shortestCommonSupersequence( X, Y, m, n ,  dp) ;
         
-        else if(s1.charAt(m-1) == s2.charAt(n-1)){
-            
-              dp[m][n] = 1 + dp[m -1][n - 1] ;
-        }
-        
-        
-        else{
-            
-           dp[m][n] = Math.max(dp[m -1][n] , dp[m][n - 1]);
-        
-            
-        }
-        
-             
-          }
-            
-        }
-        
-        
-        return dp[x][y];
-        
+            String str = X + Y;
+           
+            return str.length() - longestcommonnsubsequence; //abcd xycd ==> abxycd(shortestCommonSupersequence)
         
         
     }
+    
+       public static int shortestCommonSupersequence(String str1,String str2,int m,int n , int dp[][]){
+           
+           
+           
+           for(int i = 0 ; i < m+1 ; i++){
+               
+               
+               for(int j = 0 ; j< n+1 ;j++){
+                   
+                   
+                   if(i == 0 || j == 0){
+                       
+                       
+                       dp[i][j] = 0 ;
+                       
+                       
+                   }
+                   
+                   else if(str1.charAt(i-1) == str2.charAt(j-1)){
+                       
+                       dp[i][j] = 1 + dp[i-1][j-1];
+                       
+                       
+                   }else{
+                       
+                       
+                       dp[i][j] = Math.max(dp[i-1][j] , dp[i][j-1]);
+                       
+                       
+                   }
+                   
+                   
+               }
+               
+               
+               
+           }
+           
+           return dp[m][n];
+           
+       }
+    
     
 }
